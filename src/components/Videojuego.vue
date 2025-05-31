@@ -4,22 +4,27 @@
         <h1>VIDEOJUEGOS</h1>
     </div>
     <div v-show="mostrar">
-        <h2>Videojuego Guardado</h2>
+        <h2> {{mensajeFinal}} </h2>
     </div>
     <label for="id_nombre">Nombre</label>
     <input id="id_nombre" v-model="nuevoNombre" type="text">
+    <span v-if="mensaje.nombre">{{mensaje.nombre}}</span>
 
     <label for="id_tipo">Tipo</label>
     <input id="id_tipo" v-model="nuevoTipo" type="text">
+    <span v-if="mensaje.tipo">{{mensaje.tipo}}</span>
 
     <label for="id_plataforma">Plataforma</label>
     <input id="id_plataforma" v-model="nuevaPlataforma" type="text">
+    <span v-if="mensaje.plataforma">{{mensaje.plataforma}}</span>
 
     <label for="id_modo">Modo</label>
     <input id="id_modo" v-model="nuevoModo" type="text">
+    <span v-if="mensaje.modo">{{mensaje.modo}}</span>
 
     <label for="id_empresa">Empresa</label>
     <input id="id_empresa" v-model="nuevaEmpresa" type="text">
+    <span v-if="mensaje.empresa">{{mensaje.empresa}}</span>
 
     <button v-on:click="agregarVideojuego()">Guardar</button>
 
@@ -51,11 +56,12 @@
 export default {
  data() {
         return {
-            nuevoNombre: "Nombre",
-            nuevoTipo: "Tipo",
-            nuevaPlataforma: "Plataforma",
-            nuevoModo: "Modo",
-            nuevaEmpresa: "Empresa",
+            nuevoNombre: null,
+            nuevoTipo: null,
+            nuevaPlataforma: null,
+            nuevoModo: null,
+            nuevaEmpresa: null,
+            mensajeFinal: null,
             lista: [
                 {nombre: 'GTA', tipo:'Accion', plataforma:'PC', modo:'Offline', empresa:'Rockstar'},
                 {nombre: 'FIFA', tipo:'Deportes', plataforma:'PS5', modo:'Online', empresa:'EA Sports'},
@@ -65,11 +71,21 @@ export default {
               //  {nombre: 'League of Legends', tipo:'Estrategia', plataforma:'PC', modo:'Online', empresa:'Riot Games'},        
             ],
             mostrar: false,
+            nombreMensaje: false,
+            tipoMensaje: false,  
+            mensaje: {
+                nombre: null,
+                tipo: null,
+                plataforma: null,
+                modo: null,
+                empresa: null
+            }   
         }
     },
     methods: {
         agregarVideojuego(){
-            const nuevo = {
+           if(this.validarEntradas()){
+             const nuevo = {
                 nombre: this.nuevoNombre,
                 tipo: this.nuevoTipo,
                 plataforma: this.nuevaPlataforma,
@@ -78,7 +94,9 @@ export default {
             }
             this.lista.push(nuevo);
             this.mostrarMensaje();
+            this.mensajeFinal="Videojuego Guardado";
             this.limpiar();
+           }
             
         },
         limpiar(){
@@ -87,16 +105,67 @@ export default {
             this.nuevaPlataforma= 'Nueva Plataforma',
             this.nuevoModo='Nuevo Modo',
             this.nuevaEmpresa='Nueva Empresa'
-            this.mostrar= true;
+            this.mostrar= true,
+
+            this.mensaje.nombre=null,
+            this.mensaje.tipo=null,
+            this.mensaje.plataforma=null,
+            this.mensaje.modo=null,        
+            this.mensaje.empresa=null;
         },
         mostrarMensaje(){
             setTimeout(()=>{
                 this.mostrar=false;
             }, 2000);
+            
+           
+        },
+        validarEntradas(){
 
-        }
-    }
-}
+            try{
+            /*let valida= this.mensaje.tipo.primero;*/
+            let numero = 5;
+
+            if(this.nuevoNombre==null){
+                this.mensaje.nombre="Nombre es obligatorio";
+                numero--;
+
+            }
+            if(this.nuevoTipo==null){
+                this.mensaje.tipo="Tipo es obligatorio";
+                numero--;
+
+            }
+            if(this.nuevaPlataforma==null){
+                this.mensaje.plataforma="Plataforma es obligatorio";
+                numero--;
+
+            }
+            if(this.nuevoModo==null){
+                this.mensaje.modo="Modo es obligatorio";
+                numero--;
+             }
+            if(this.nuevaEmpresa==null){
+                this.mensaje.empresa="Empresa es obligatorio";
+                numero--;
+ 
+            }
+            if(numero==5){
+                return true;
+            }else {
+            return false;
+            }
+            }
+            catch(error){
+                console.error("Error ha ocurrido un problema")
+                console.error(error);
+                this.mostrar = true;
+                this.mensajeFinal="Ha ocurrido un error en el sistema";
+            }
+
+        },
+    },
+};
 </script>
    
 <style scoped>
@@ -133,6 +202,10 @@ input {
 input:focus {
     border: 1.5px solid #3c78d8;
     outline: none;
+}
+
+span {
+    display: block;
 }
 
 button {
