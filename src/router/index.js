@@ -5,6 +5,7 @@ import EstudianteView from '../views/EstudianteView.vue'
 import ContadorView from "../views/ContadorView.vue"
 import EstudianteTablaView from "../views/EstudianteTablaView.vue"
 import PreguntaView from "../views/PreguntaView.vue"
+import ResponsivoView from "../views/ResponsivoView.vue"
 
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
     component: PreguntaView
   },
 
+  {
+    path: '/responsivo',
+    name: 'responsivoView',
+    component: ResponsivoView
+  },
 
   {
     path: '/about',
