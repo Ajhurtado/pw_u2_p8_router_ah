@@ -6,6 +6,8 @@ import ContadorView from "../views/ContadorView.vue"
 import EstudianteTablaView from "../views/EstudianteTablaView.vue"
 import PreguntaView from "../views/PreguntaView.vue"
 import ResponsivoView from "../views/ResponsivoView.vue"
+import EstudianteMatriculaView from '@/views/EstudianteMatriculaView.vue'
+import EstudianteMatriculaFormularioView from '@/views/EstudianteMatriculaFormularioView.vue'
 
 
 const routes = [
@@ -43,6 +45,18 @@ const routes = [
     path: '/responsivo',
     name: 'responsivoView',
     component: ResponsivoView
+  },
+
+  {
+    path: '/estudianteMatricula',
+    name: 'estudianteMatriculaView',
+    component: EstudianteMatriculaView
+  },
+
+  {
+    path: '/estudianteMatriculaFormulario',
+    name: 'estudianteMatriculaFormularioView',
+    component: EstudianteMatriculaFormularioView
   },
 
   {
